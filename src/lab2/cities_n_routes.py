@@ -18,7 +18,18 @@ def get_randomly_spread_cities(size, n_cities):
     :return: A list of cities with random x and y coordinates.
     """
     # Consider the condition where x size and y size are different
-    pass
+
+    cities = []
+
+    for i in range(n_cities):
+        x_loc = random.randint(0, size[0])
+        y_loc = random.randint(0, size[1])
+
+        cities.append((x_loc, y_loc))
+
+    return cities
+
+    
 
 def get_routes(city_names):
     """
@@ -29,17 +40,22 @@ def get_routes(city_names):
     :return: A list of tuples representing all possible links between cities/ pairs of cities, 
             each item in the list (a link) represents a route between two cities.
     """
-    pass
+    
+    city_links = itertools.combinations(city_names, 2)
+
+    return city_links
+        
+    
 
 
 # TODO: Fix variable names
 if __name__ == '__main__':
     city_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     '''print the cities and routes'''
-    cities = get_randomly_spread_cities((100, 200), len(city_names))
+    city_locations = get_randomly_spread_cities((100, 200), len(city_names))
     routes = get_routes(city_names)
     print('Cities:')
-    for i, city in enumerate(cities):
+    for i, city in enumerate(city_locations):
         print(f'{city_names[i]}: {city}')
     print('Routes:')
     for i, route in enumerate(routes):
