@@ -22,8 +22,8 @@ def get_randomly_spread_cities(size, n_cities):
     cities = []
 
     for i in range(n_cities):
-        x_loc = random.randint(0, size[0])
-        y_loc = random.randint(0, size[1])
+        x_loc = random.randint(0, size[0] - 1)
+        y_loc = random.randint(0, size[1] - 1)
 
         cities.append((x_loc, y_loc))
 
@@ -41,7 +41,7 @@ def get_routes(city_names):
             each item in the list (a link) represents a route between two cities.
     """
     
-    city_links = itertools.combinations(city_names, 2)
+    city_links = list(itertools.combinations(city_names, 2))
 
     return city_links
         
