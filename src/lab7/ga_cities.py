@@ -20,6 +20,7 @@ from pathlib import Path
 sys.path.append(str((Path(__file__) / ".." / ".." / "..").resolve().absolute()))
 
 from src.lab5.landscape import elevation_to_rgba
+from src.lab5.landscape import get_elevation
 
 
 def game_fitness(cities, idx, elevation, size):
@@ -30,6 +31,32 @@ def game_fitness(cities, idx, elevation, size):
     2. The cities should have a realistic distribution across the landscape
     3. The cities may also not be on top of mountains or on top of each other
     """
+    #Get list of city locations
+    city_loc = solution_to_cities(cities, size)
+    #Keep track of attributes to calculate fitness later
+    goodElevation = 0
+    overlap = 0
+    #Evaluate each city
+    for city in city_loc:
+        #Below 0.35 is water and above 0.60 is mountains
+        #goodElevation is increased by 1 for each city that meets these criteria
+        if elevation[city[0]][city[1]] > 0.35 and elevation[city[0]][city[1]] < 0.60:
+            goodElevation += 1
+        #For each city, check to see if it overlaps any other cities
+        #In the perfect case, the number should be the total number of cities because a city should only overlap itself and not other cities
+        for overcity in city_loc:
+            #Checking a radius of 10 units for an overlap
+            #Bigger radii work, but may require more generations for best results (500 or 1000 generations could be needed for example)
+            if (city[0] > overcity[0] - 10 and city[0] < overcity[0] + 10) and (city[1] > overcity[1] - 10 and city[1] < overcity[1] + 10):
+                overlap += 1
+
+    #If each city only overlaps itself and no other cities, then increase fitness
+    if overlap <= len(city_loc):
+        fitness += 0.003
+    #For each city with a good elevation, increase fitness
+    #Could do this collectively as well, but was more consistent this way due to lower number of generations
+    fitness += (0.0003 * goodElevation)
+
     return fitness
 
 
@@ -115,6 +142,7 @@ if __name__ == "__main__":
     n_cities = 10
     elevation = []
     """ initialize elevation here from your previous code"""
+    elevation = get_elevation(size)
     # normalize landscape
     elevation = np.array(elevation)
     elevation = (elevation - elevation.min()) / (elevation.max() - elevation.min())
