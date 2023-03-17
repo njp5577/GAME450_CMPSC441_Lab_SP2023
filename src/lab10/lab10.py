@@ -6,11 +6,12 @@ You can usually improve the model by normalizing the input data. Try that and se
 """
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import numpy as np
 
-data = pd.read_csv("src/lab8/heart.csv")
+data = pd.read_csv("src/lab10/heart.csv")
 
 # Transform the categorical variables into dummy variables.
 print(data.head())
@@ -25,13 +26,31 @@ x_train, x_test, y_train, y_test = train_test_split(
 )
 
 """ Train a sklearn model here. """
+#Creating and training the neural network
+sklearn_model = MLPClassifier(solver='lbfgs', max_iter=2000, alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+sklearn_model.fit(x_train, y_train)
 
-sklearn_model = None
 
 # Accuracy
 print("Accuracy of model: {}\n".format(sklearn_model.score(x_test, y_test)))
 
 
 """ Improve the model by normalizing the input data. """
+#Copy and normalize data
+df_min_max_scaled = df.copy()
+  
+for column in df_min_max_scaled.columns:
+    df_min_max_scaled[column] = (df_min_max_scaled[column] - df_min_max_scaled[column].min()) / (df_min_max_scaled[column].max() - df_min_max_scaled[column].min())
+
+y = df_min_max_scaled.HeartDisease.values
+x = df_min_max_scaled.drop(["HeartDisease"], axis=1)
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.2, random_state=25
+)
+
+#Retrain the model
+sklearn_model = MLPClassifier(solver='lbfgs', max_iter=2000, alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+sklearn_model.fit(x_train, y_train)
+
 
 print("Accuracy of improved model: {}\n".format(sklearn_model.score(x_test, y_test)))
