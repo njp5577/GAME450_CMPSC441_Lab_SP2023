@@ -20,20 +20,20 @@ from lab11.turn_combat import Combat
 from lab11.pygame_ai_player import PyGameAICombatPlayer
 from lab11.pygame_combat import PyGameComputerCombatPlayer
 
-def run_episode(currentGame, player, opponent):
+def run_episode(player, opponent):
 
     turns = []
 
-    while(1):
+    currentGame = Combat()
+
+    while(currentGame.gameOver == False):
         reward = run_turn(currentGame, player, opponent)
 
         state = (player.health, opponent.health)
 
         action = player.weapon
 
-        if(reward != 5):
-            break
-        else:
+        if(reward == 5):
             reward = 0
 
         turns.append((state, action, reward))
@@ -41,8 +41,7 @@ def run_episode(currentGame, player, opponent):
     return turns
 
 if __name__ == "__main__":
-    currentGame = Combat()
     player = PyGameAICombatPlayer("Noah")
     opponent = PyGameComputerCombatPlayer("Homework")
-    turns = run_episode(currentGame, player, opponent)
+    turns = run_episode(player, opponent)
     print(turns)

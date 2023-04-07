@@ -11,7 +11,7 @@ class PyGameAIPlayer:
     def selectAction(self, state):
         #Randomly move
         num = random.randint(0, 9)
-        time.sleep(5)
+        time.sleep(1)
         return num + 48
 
 
@@ -25,5 +25,5 @@ class PyGameAICombatPlayer(CombatPlayer):
     def weapon_selecting_strategy(self):
         while True:
             self.weapon = random.randint(0, 2)
-            time.sleep(2)
+            time.sleep(1)
             return self.weapon
