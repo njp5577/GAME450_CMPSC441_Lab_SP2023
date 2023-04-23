@@ -27,9 +27,8 @@ def run_episode(player, opponent):
     currentGame = Combat()
 
     while(currentGame.gameOver == False):
-        reward = run_turn(currentGame, player, opponent)
-
         state = (player.health, opponent.health)
+        reward = run_turn(currentGame, player, opponent)
 
         action = player.weapon
 
