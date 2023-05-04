@@ -12,7 +12,8 @@ class PyGameHumanPlayer:
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
                 if ord("0") <= event.key <= ord("9"):
-                    print(event.key)
+                    return event.key
+                elif ord("j") == event.key or ord("q") == event.key or ord("w") == event.key or ord("x") == event.key:
                     return event.key
         return ord(str(state.current_city))  # Not a safe operation for >10 cities
 

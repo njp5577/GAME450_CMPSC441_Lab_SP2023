@@ -45,9 +45,9 @@ def game_fitness(cities, idx, elevation, size):
         #For each city, check to see if it overlaps any other cities
         #In the perfect case, the number should be the total number of cities because a city should only overlap itself and not other cities
         for overcity in city_loc:
-            #Checking a radius of 10 units for an overlap
+            #Checking a radius of 40 units for an overlap
             #Bigger radii work, but may require more generations for best results (500 or 1000 generations could be needed for example)
-            if (city[0] > overcity[0] - 10 and city[0] < overcity[0] + 10) and (city[1] > overcity[1] - 10 and city[1] < overcity[1] + 10):
+            if (city[0] > overcity[0] - 40 and city[0] < overcity[0] + 40) and (city[1] > overcity[1] - 40 and city[1] < overcity[1] + 40):
                 overlap += 1
 
     #If each city only overlaps itself and no other cities, then increase fitness
@@ -152,6 +152,7 @@ if __name__ == "__main__":
     fitness = lambda cities, idx: game_fitness(
         cities, idx, elevation=elevation, size=size
     )
+    
     fitness_function, ga_instance = setup_GA(fitness, n_cities, size)
 
     # Show one of the initial solutions.

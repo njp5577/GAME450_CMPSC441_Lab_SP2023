@@ -7,7 +7,7 @@ from lab11.turn_combat import CombatPlayer, Combat
 from lab11.pygame_ai_player import PyGameAICombatPlayer
 from lab11.pygame_human_player import PyGameHumanCombatPlayer
 
-AI_SPRITE_PATH = Path("assets/ai.png")
+AI_SPRITE_PATH = "assets/ai.png" #Path("assets/ai.png")
 
 pygame.font.init()
 game_font = pygame.font.SysFont("Comic Sans MS", 15)
@@ -49,7 +49,7 @@ def run_turn(currentGame, player, opponent):
     currentGame.takeTurn(player, opponent)
     print("%s's health = %d" % (player.name, player.health))
     print("%s's health = %d" % (opponent.name, opponent.health))
-    reward = currentGame.checkWin(player, opponent)
+    reward = (currentGame.checkWin(player, opponent))
     return reward
 
 def run_pygame_combat(combat_surface, screen, player_sprite):
@@ -58,7 +58,7 @@ def run_pygame_combat(combat_surface, screen, player_sprite):
     """ Add a line below that will reset the player object
     to an instance of the PyGameAICombatPlayer class"""
 
-    player = PyGameAICombatPlayer("Legolas")
+    #player = PyGameAICombatPlayer("Legolas")
 
     opponent = PyGameComputerCombatPlayer("Computer")
     opponent_sprite = Sprite(
@@ -71,5 +71,7 @@ def run_pygame_combat(combat_surface, screen, player_sprite):
         draw_combat_on_window(combat_surface, screen, player_sprite, opponent_sprite)
         #-----------------------------------------------
         #-----------------------------Combat--------------------------------------------
-        run_turn(currentGame, player, opponent)
+        cost = (run_turn(currentGame, player, opponent))[1]
         #----------------------------------------------------------------------------------
+
+    return cost

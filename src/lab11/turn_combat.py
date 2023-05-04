@@ -71,17 +71,17 @@ class Combat:
     def checkWin(self, player, opponent):
         if player.health < 1 and opponent.health > 0:
             self.gameOver = True
-            print("You Lose")
-            return -1
+            print("You Lose. You also lost 20 money.")
+            return -1, 20
         elif opponent.health < 1 and player.health > 0:
             self.gameOver = True
-            print("You Win")
-            return 1
+            print("You Win. You lost no money.")
+            return 1, 0
         elif player.health < 1 and opponent.health < 1:
             self.gameOver = True
             print("*** Draw ***")
-            return 0
-        return 5
+            return 0, 0
+        return 5, 0
 
     def displayResult(self, player, opponent):
         print(

@@ -54,7 +54,7 @@ def get_route_cost(route_coordinate, game_map):
     path = list(bresenham(x0, y0, x1, y1))
 
     #Return the cost
-    return game_map[tuple(zip(*path))].sum()
+    return game_map[tuple(zip(*path))].max(), game_map[tuple(zip(*path))].min() #for average cost (game_map[tuple(zip(*path))].sum())/(len(path))
 
 
 def route_to_coordinates(city_locations, city_names, routes):
